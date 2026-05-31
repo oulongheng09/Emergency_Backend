@@ -20,10 +20,14 @@ export class User {
     @Column({ unique: true })
     email: string;
 
-    @Column({ nullable: true })
+    @Column({
+      unique: true,
+      nullable: true,
+    })
+    supabase_user_id: string;
 
     @Column({ nullable: true })
-    phone: string;
+    phone_number: string;
 
     @Column({ nullable: true })
     address: string;

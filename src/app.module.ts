@@ -10,6 +10,8 @@ import { FirstAidCategoriesModule } from './first-aid-categories/first-aid-categ
 import { UserEmergencyContactsModule } from './user-emergency-contacts/user-emergency-contacts.module';
 import { EmergencyServicesModule } from './emergency-services/emergency-services.module';
 import { ServiceTypesModule } from './service-types/service-types.module';
+import { AuthService } from './auth/auth.service';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -35,7 +37,8 @@ import { ServiceTypesModule } from './service-types/service-types.module';
     UserEmergencyContactsModule,
     FirstAidCategoriesModule,
     FirstAidTipsModule,
-    SosLogsModule
+    SosLogsModule,
+    AuthModule
   ],
   controllers: [AppController],
   providers: [AppService],
