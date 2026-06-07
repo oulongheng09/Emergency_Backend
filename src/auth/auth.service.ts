@@ -20,6 +20,17 @@
     ) {}
 
     async register(dto: RegisterDto) {
+
+        const { data: existingUsers } =
+            await this.supabase.client.auth.admin.listUsers();
+
+            console.log(
+            existingUsers.users.map(u => ({
+                id: u.id,
+                email: u.email,
+            })),
+            );
+
         const { data, error } =
         await this.supabase.client.auth.admin.createUser({
             email: dto.email,

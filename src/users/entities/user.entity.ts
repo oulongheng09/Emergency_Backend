@@ -30,7 +30,7 @@ export class User {
     phone_number: string;
 
     @Column({ nullable: true })
-    address: string;
+    location: string;
 
     @Column({ nullable: true })
     blood_group: string;
@@ -38,8 +38,8 @@ export class User {
     @Column({ type: 'text', nullable: true })
     allergies: string;
 
-    @Column({ default: 'English' })
-    language: string;
+    @Column({ type: 'text', nullable: true })
+    urgent_medical_notes: string;
 
     @CreateDateColumn()
     created_at: Date;

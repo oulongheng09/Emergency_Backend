@@ -28,9 +28,13 @@ export class CreateUserDto {
 
     @IsOptional()
     @IsString()
-    language?: string;
+    location?: string;
 
     @IsOptional()
     @IsString()
     address?: string;
+
+    @IsOptional()
+    @IsString()
+    urgent_medical_notes?: string;
 }
