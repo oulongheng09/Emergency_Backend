@@ -41,10 +41,16 @@ export class EmergencyService {
     @Column()
     province: string;
 
-    @Column('decimal', { precision: 10, scale: 7 })
+    @Column({
+      type: 'double precision',
+       nullable: true,
+    })
     latitude: number;
 
-    @Column('decimal', { precision: 10, scale: 7 })
+    @Column({
+      type: 'double precision',
+       nullable: true,
+    })
     longitude: number;
 
     @Column({ type: 'text', nullable: true })

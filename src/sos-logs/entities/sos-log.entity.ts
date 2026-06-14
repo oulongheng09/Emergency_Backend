@@ -30,19 +30,17 @@ export class SosLog {
   @JoinColumn({ name: 'service_id' })
   service: EmergencyService;
 
-  @Column('decimal', {
-    precision: 10,
-    scale: 7,
+  @Column({
+    type: 'double precision',
     nullable: true,
   })
-  user_latitude: number;
+  latitude: number;
 
-  @Column('decimal', {
-    precision: 10,
-    scale: 7,
+  @Column({
+    type: 'double precision',
     nullable: true,
   })
-  user_longitude: number;
+  longitude: number;
 
   @CreateDateColumn()
   created_at: Date;
