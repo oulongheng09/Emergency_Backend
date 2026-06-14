@@ -20,7 +20,15 @@ export class FirstAidCategoriesService {
   }
 
   async findOne(id: string): Promise<FirstAidCategory> {
-    const category = await this.repository.findOne({where: { id }, relations: {tips: true}});
+    const category = await this.repository.findOne({
+      where: { id }, 
+      relations: {tips: true}, 
+      order: {
+        tips: {
+          display_order: 'ASC'
+        }
+      }
+    });
 
     if (!category) {
       throw new NotFoundException('Category not found');
