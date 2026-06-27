@@ -11,15 +11,18 @@ import { FirstAidTip } from '../../first-aid-tips/entities/first-aid-tip.entity'
 
 @Entity('first_aid_categories')
 export class FirstAidCategory {
-    @PrimaryGeneratedColumn('uuid')
-    id: string;
+  @PrimaryGeneratedColumn('uuid')
+  id: string;
 
-    @Column({ unique: true })
-    name: string;
+  @Column({ unique: true })
+  name: string;
 
-    @CreateDateColumn()
-    created_at: Date;
+  @Column({ nullable: true })
+  name_km?: string;
 
-    @OneToMany(() => FirstAidTip,(tip) => tip.category)
-    tips: FirstAidTip[];
+  @CreateDateColumn()
+  created_at: Date;
+
+  @OneToMany(() => FirstAidTip, (tip) => tip.category)
+  tips: FirstAidTip[];
 }

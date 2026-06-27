@@ -18,19 +18,23 @@ export class FirstAidTip {
   @Column()
   category_id: string;
 
-  @ManyToOne(
-    () => FirstAidCategory,
-    (category) => category.tips,
-    { onDelete: 'CASCADE' },
-  )
+  @ManyToOne(() => FirstAidCategory, (category) => category.tips, {
+    onDelete: 'CASCADE',
+  })
   @JoinColumn({ name: 'category_id' })
   category: FirstAidCategory;
 
   @Column()
   title: string;
 
+  @Column({ nullable: true })
+  title_km?: string;
+
   @Column('text')
   content: string;
+
+  @Column('text', { nullable: true })
+  content_km?: string;
 
   @Column()
   display_order: number;
@@ -43,5 +47,4 @@ export class FirstAidTip {
 
   @UpdateDateColumn()
   updated_at: Date;
-
 }

@@ -1,7 +1,4 @@
-import {
-  Injectable,
-  NotFoundException,
-} from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { FirstAidCategory } from './entities/first-aid-category.entity';
@@ -13,27 +10,51 @@ export class FirstAidCategoriesService {
     private readonly repository: Repository<FirstAidCategory>,
   ) {}
 
-  async findAll(): Promise<FirstAidCategory[]> {
-    return this.repository.find({
-      order: {name: 'ASC'},
+  async findAll(lang?: string): Promise<FirstAidCategory[]> {
+    const categories = await this.repository.find({
+      order: { name: 'ASC' },
     });
+
+    return categories.map((category) => this.localizeCategory(category, lang));
   }
 
-  async findOne(id: string): Promise<FirstAidCategory> {
+  async findOne(id: string, lang?: string): Promise<FirstAidCategory> {
     const category = await this.repository.findOne({
-      where: { id }, 
-      relations: {tips: true}, 
+      where: { id },
+      relations: { tips: true },
       order: {
         tips: {
-          display_order: 'ASC'
-        }
-      }
+          display_order: 'ASC',
+        },
+      },
     });
 
     if (!category) {
       throw new NotFoundException('Category not found');
     }
 
-    return category;
+    return this.localizeCategory(category, lang, true);
+  }
+
+  private localizeCategory(
+    category: FirstAidCategory,
+    lang?: string,
+    includeTips = false,
+  ): FirstAidCategory {
+    const isKhmer = lang?.toLowerCase() === 'km';
+    const localized = {
+      ...category,
+      name: isKhmer && category.name_km ? category.name_km : category.name,
+    } as FirstAidCategory;
+
+    if (includeTips && category.tips) {
+      localized.tips = category.tips.map((tip) => ({
+        ...tip,
+        title: isKhmer && tip.title_km ? tip.title_km : tip.title,
+        content: isKhmer && tip.content_km ? tip.content_km : tip.content,
+      }));
+    }
+
+    return localized;
   }
 }
